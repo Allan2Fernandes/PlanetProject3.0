@@ -1,14 +1,14 @@
-﻿using System;
+﻿
+using System;
 
 using System.Diagnostics;
-
+using System.Threading;
 using System.Timers;
 using System.Windows;
 
 using System.Windows.Media;
 
 using System.Windows.Threading;
-
 
 namespace PlanetProject
 {
@@ -21,7 +21,10 @@ namespace PlanetProject
         Planet Venus;
         Planet Earth;
         bool usingDispatcherTimer = false;
-        private static System.Timers.Timer aTimer;
+        bool useAnotherTimer = false;
+        bool useYetAnotherTime = true;
+        //private static Timer AnotherTimer;
+        private static System.Threading.Timer YetAnotherTimer;
         public MainWindow()
         {
             InitializeComponent();
@@ -41,17 +44,36 @@ namespace PlanetProject
          
             
             }
-            else
+            else if(useAnotherTimer)
             {
-                aTimer = new System.Timers.Timer();
+                /*
+                AnotherTimer = new System.Timers.Timer();
                 // Hook up the Elapsed event for the timer. 
-                aTimer.Elapsed += MoveMarsTimer;
-                aTimer.Elapsed += MoveVenusTimer;
-                aTimer.Elapsed += MoveEarthTimer;
-                aTimer.Interval = 1;
+                AnotherTimer.Elapsed += MoveMarsTimer;
+                AnotherTimer.Elapsed += MoveVenusTimer;
+                AnotherTimer.Elapsed += MoveEarthTimer;
+                AnotherTimer.Interval = 1;
       
-                aTimer.Enabled = true;
+                AnotherTimer.Enabled = true;
+                */
+                Debug.WriteLine("Temporarily disabled");
+            }else if (useYetAnotherTime)
+            {
+                YetAnotherTimer = new System.Threading.Timer(Callback, null, 1, Timeout.Infinite);
             }
+        }
+
+        private void Callback(object state)
+        {
+            //Debug.WriteLine("Callback");
+            
+            this.Dispatcher.Invoke(() =>
+            {
+                Mars.MovePlanet();
+                Venus.MovePlanet();
+                Earth.MovePlanet();
+            });
+            YetAnotherTimer.Change(1, Timeout.Infinite);
         }
 
         public void TestMethod(object source, ElapsedEventArgs e)
