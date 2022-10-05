@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+
 namespace PlanetProject
 {
     /// <summary>
@@ -26,7 +28,8 @@ namespace PlanetProject
         Planet Mars;
         Planet Venus;
         Planet Earth;
-        bool usingDispatcherTimer = true;
+        bool usingDispatcherTimer = false;
+        private static System.Timers.Timer aTimer;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,16 +46,32 @@ namespace PlanetProject
 
             if (usingDispatcherTimer)
             {
+      
                 DispatcherTimer timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromMilliseconds(1);
                 timer.Tick += MoveMars;
                 timer.Tick += MoveVenus;
                 timer.Tick += MoveEarth;
                 timer.Start();
-            }
-
+         
             
+            }
+            else
+            {
+                aTimer = new System.Timers.Timer();
+                // Hook up the Elapsed event for the timer. 
+                aTimer.Elapsed += MoveMarsTimer;
+                aTimer.Elapsed += MoveVenusTimer;
+                aTimer.Elapsed += MoveEarthTimer;
+                aTimer.Interval = 1;
+      
+                aTimer.Enabled = true;
+            }
+        }
 
+        public void TestMethod(object source, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("Ticking");
         }
 
         public void MoveMars(object sender, EventArgs e)
@@ -66,6 +85,34 @@ namespace PlanetProject
         public void MoveEarth(object sender, EventArgs e)
         {
             Earth.MovePlanet();
+        }
+
+        public void MoveMarsTimer(object source, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+                Mars.MovePlanet();
+            });
+         }
+
+        public void MoveVenusTimer(object source, ElapsedEventArgs e)
+        {
+            
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+                Venus.MovePlanet();
+            });
+        }
+        public void MoveEarthTimer(object source, ElapsedEventArgs e)
+        {
+            
+            this.Dispatcher.Invoke(() =>
+            {
+                // your code here.
+                Earth.MovePlanet();
+            });
         }
     }
 }
