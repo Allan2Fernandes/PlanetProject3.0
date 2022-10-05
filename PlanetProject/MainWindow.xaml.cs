@@ -37,13 +37,6 @@ namespace PlanetProject
             Venus = new Planet(20, 120, MyCanvas, Colors.Orange);
             Earth = new Planet(25, 170, MyCanvas, Colors.Green);
 
-            /*
-             * dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-                dispatcherTimer.Interval = new TimeSpan(0,0,1);
-                dispatcherTimer.Start();
-             */
-
             if (usingDispatcherTimer)
             {
       
@@ -91,7 +84,6 @@ namespace PlanetProject
         {
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
                 Mars.MovePlanet();
             });
          }
@@ -101,7 +93,6 @@ namespace PlanetProject
             
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
                 Venus.MovePlanet();
             });
         }
@@ -110,7 +101,6 @@ namespace PlanetProject
             
             this.Dispatcher.Invoke(() =>
             {
-                // your code here.
                 Earth.MovePlanet();
             });
         }
