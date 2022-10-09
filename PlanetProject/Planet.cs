@@ -48,8 +48,6 @@ namespace PlanetProject
 
         public void DrawPlanet()
         {
-
-            
             xPos = CanvasWidth/2 - OrbitalRadius*Math.Cos(angle) - radius;
             yPos = CanvasHeight/2 - OrbitalRadius * Math.Sin(angle) - radius;
             Canvas.SetLeft(ellipse, xPos);

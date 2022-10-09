@@ -17,7 +17,7 @@ namespace PlanetProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        Planet Mars;
+        Planet Mercury;
         Planet Venus;
         Planet Earth;
         bool usingDispatcherTimer = false;
@@ -28,7 +28,7 @@ namespace PlanetProject
         public MainWindow()
         {
             InitializeComponent();
-            Mars = new Planet(10, 70, MyCanvas, Colors.Brown);
+            Mercury = new Planet(10, 70, MyCanvas, Colors.GreenYellow);
             Venus = new Planet(20, 120, MyCanvas, Colors.Orange);
             Earth = new Planet(25, 170, MyCanvas, Colors.Green);
 
@@ -69,7 +69,7 @@ namespace PlanetProject
             
             this.Dispatcher.Invoke(() =>
             {
-                Mars.MovePlanet();
+                Mercury.MovePlanet();
                 Venus.MovePlanet();
                 Earth.MovePlanet();
             });
@@ -83,7 +83,7 @@ namespace PlanetProject
 
         public void MoveMars(object sender, EventArgs e)
         {
-            Mars.MovePlanet();
+            Mercury.MovePlanet();
         }
         public void MoveVenus(object sender, EventArgs e)
         {
@@ -98,7 +98,7 @@ namespace PlanetProject
         {
             this.Dispatcher.Invoke(() =>
             {
-                Mars.MovePlanet();
+                Mercury.MovePlanet();
             });
          }
 
